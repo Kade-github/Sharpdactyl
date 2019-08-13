@@ -3,7 +3,7 @@
 ## The C# API Wrapper for the Pterodacty Game Panel
 
 # Installation
-## Nugget:
+## NuGet:
 (Is currently down)
 ## Other
 Dowload from releases [here](https://github.com/KadePcGames/Sharpdactyl/releases/latest)
