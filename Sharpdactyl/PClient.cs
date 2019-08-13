@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using Newtonsoft.Json;
@@ -7,6 +7,7 @@ using System.Collections.Specialized;
 using Sharpdactyl.Models.Client;
 using Sharpdactyl.Models.User;
 using Sharpdactyl.Models.Node;
+using System;
 
 namespace Sharpdactyl
 {
@@ -134,7 +135,7 @@ namespace Sharpdactyl
             data["first_name"] = first;
             data["last_name"] = last;
             data["password"] = password;
-            return JsonConvert.DeserializeObject<UserDatum>(Post("application/users/" + userId, data));
+            return JsonConvert.DeserializeObject<UserDatum>(Patch("application/users/" + userId, data));
         }
 
         public void Admin_DeleteUser(string userId) => Delete("application/users/" + userId);
@@ -204,6 +205,12 @@ namespace Sharpdactyl
 
         public void Admin_CreateServer(ServerDatum srv)
         {
+            ServerDatum srva = new ServerDatum();
+            srva.Attributes.Description = "A new server!";
+            srva.Attributes.feature_limits = new FeatureLimits() { Allocations = 0, Databases = 0 };
+            srva.Attributes.Limits = new Limits() { Cpu = 200, Disk = 2000, Io = 56, Memory = 2048 };
+            srva.Attributes.Name = "New Server!";
+            srva.Attributes.Uuid = new Guid().ToString();
             var data = JsonConvert.SerializeObject(srv);
             PostJSON("application/servers/", data);
         }
@@ -246,6 +253,19 @@ namespace Sharpdactyl
             request.Headers["Authorization"] = "Bearer " + ApiKey;
             request.ContentType = "application/json";
             request.Accept = "Application/vnd.pterodactyl.v1+json";
+        }
+
+        private string Patch(string query, NameValueCollection data)
+        {
+            var wb = new WebClient();
+
+            wb.Headers.Add("Authorization", "Bearer " + ApiKey);
+            wb.Headers.Add("Accept", "Application/vnd.pterodactyl.v1+json");
+
+            var response = wb.UploadValues(HostName + "/api/" + query, "PATCH", data);
+            string responseInString = Encoding.UTF8.GetString(response);
+
+            return responseInString;
         }
 
         private string Post(string query, NameValueCollection data)
