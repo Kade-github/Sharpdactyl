@@ -3,7 +3,7 @@
 ## Initatilzing the API
 C# Code
 ```csharp
-PClient client = new PClient(hostName, meowmeowmeow);
+PClient client = new PClient("hostName", "meowmeowmeow");
 ```
 
 ## Datum Types
