@@ -4,7 +4,7 @@
 
 # Installation
 ## NuGet:
-(Is currently down)
+`Install-Package Kade.Sharpdactyl`
 ## Other
 Dowload from releases [here](https://github.com/KadePcGames/Sharpdactyl/releases/latest)
 
