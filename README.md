@@ -4,7 +4,8 @@
 
 # Installation
 ## Nugget:
-`PM Install Kade.Sharpdactyl`
+`Install-Package Kade.Sharpdactyl`
+[Nugget Link](https://www.nuget.org/packages/Kade.Sharpdactyl/)
 ## Other
 Dowload from releases [here](https://github.com/KadePcGames/Sharpdactyl/releases/latest)
 
