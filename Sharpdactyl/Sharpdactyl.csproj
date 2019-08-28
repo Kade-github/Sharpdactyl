@@ -47,6 +47,10 @@
   <ItemGroup>
     <Compile Include="Models\Client\Server.cs" />
     <Compile Include="Models\Client\ServerUtil.cs" />
+    <Compile Include="Models\Node\Node.cs" />
+    <Compile Include="Models\Node\NodeDatum.cs" />
+    <Compile Include="Models\User\User.cs" />
+    <Compile Include="Models\User\UserDatum.cs" />
     <Compile Include="PClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
