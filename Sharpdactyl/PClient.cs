@@ -203,16 +203,10 @@ namespace Sharpdactyl
             return JsonConvert.DeserializeObject<ServerDatum>(Get("application/servers/" + id), settings);
         }
 
-        public void Admin_CreateServer(ServerDatum srv)
+        public ServerDatum Admin_CreateServer(ServerDatum srva)
         {
-            ServerDatum srva = new ServerDatum();
-            srva.Attributes.Description = "A new server!";
-            srva.Attributes.feature_limits = new FeatureLimits() { Allocations = 0, Databases = 0 };
-            srva.Attributes.Limits = new Limits() { Cpu = 200, Disk = 2000, Io = 56, Memory = 2048 };
-            srva.Attributes.Name = "New Server!";
-            srva.Attributes.Uuid = new Guid().ToString();
-            var data = JsonConvert.SerializeObject(srv);
-            PostJSON("application/servers/", data);
+            var data = JsonConvert.SerializeObject(srva.Attributes);
+            return JsonConvert.DeserializeObject<ServerDatum>(PostJSON("application/servers/", data)); 
         }
 
         public void Admin_BanServerById(string id)
@@ -284,6 +278,7 @@ namespace Sharpdactyl
         private string PostJSON(string query, string json)
         {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(HostName + "/api/" + query);
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + ApiKey);
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Method = "POST";
 
@@ -298,6 +293,7 @@ namespace Sharpdactyl
                 result = streamReader.ReadToEnd();
             }
             return result;
+
         }
 
         private string Get(string query)
